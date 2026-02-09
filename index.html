@@ -1,5 +1,48 @@
 
-<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Reported Speech: Questions Challenge</title>    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">    <style>        :root { --primary: #a29bfe; --success: #00b894; --error: #ff7675; --warning: #fdcb6e; }        body {             font-family: 'Poppins', sans-serif; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center;            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1920&q=80');            background-size: cover; color: white; overflow: hidden;        }        .quiz-container {             background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); padding: 40px; border-radius: 25px;             width: 95%; max-width: 850px; text-align: center; border: 1px solid rgba(255,255,255,0.1);            max-height: 90vh; overflow-y: auto;        }        #timer { font-size: 1.8rem; color: var(--warning); margin-bottom: 15px; }        .progress-container { display: flex; height: 8px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 30px; }        .progress-segment { flex: 1; border-right: 1px solid rgba(0,0,0,0.2); transition: 0.4s; }        .direct-quote { font-size: 0.9rem; color: var(--primary); text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }        .reported-sentence { font-size: 1.3rem; margin-bottom: 30px; }        input[type="text"] {            background: transparent; border: none; border-bottom: 2px solid var(--primary); color: #fff;            font-size: 1.3rem; text-align: center; width: 400px; outline: none; margin-bottom: 10px;        }        #next-btn {             padding: 15px 45px; background: var(--primary); color: #2d3436; border: none;             border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; margin-top: 10px;        }        .review-item { text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--error); font-size: 0.9rem; }        .hidden { display: none; }    </style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reported Speech: Questions Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #a29bfe; --success: #00b894; --error: #ff7675; --warning: #fdcb6e; }
+        body {             
+            font-family: 'Poppins', sans-serif; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; color: white; overflow: hidden;
+        }
+        .quiz-container {             
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); padding: 40px; border-radius: 25px;
+            width: 95%; max-width: 850px; text-align: center; border: 1px solid rgba(255,255,255,0.1);
+            max-height: 90vh; overflow-y: auto;
+        }
+        #timer { font-size: 1.8rem; color: var(--warning); margin-bottom: 15px; }
+        .progress-container { display: flex; height: 8px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 30px; }
+        .progress-segment { flex: 1; border-right: 1px solid rgba(0,0,0,0.2); transition: 0.4s; }
+        .direct-quote { font-size: 0.9rem; color: var(--primary); text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+        .reported-sentence { font-size: 1.3rem; margin-bottom: 30px; }
+        input[type="text"] {
+            background: transparent; border: none; border-bottom: 2px solid var(--primary); color: #fff;
+            font-size: 1.3rem; text-align: center; width: 400px; outline: none; margin-bottom: 10px;
+        }
+        #next-btn {             
+            padding: 15px 45px; background: var(--primary); color: #2d3436; border: none;
+            border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; margin-top: 10px;
+        }
+        .review-item { text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--error); font-size: 0.9rem; }
+        .hidden { display: none; }
+        .attempt-selector { margin: 20px 0; }
+        .attempt-btn { 
+            padding: 10px 20px; margin: 5px; background: rgba(162, 155, 254, 0.3); 
+            border: 2px solid var(--primary); border-radius: 8px; cursor: pointer; 
+            color: white; font-weight: 600;
+        }
+        .attempt-btn:hover { background: rgba(162, 155, 254, 0.5); }
+    </style>
+</head>
+<body>
 
 <div class="quiz-container">
     <div id="start-screen">
@@ -7,6 +50,10 @@
         <p>Convert the direct questions into reported speech.</p>
         <input type="text" id="student-name" placeholder="Enter Full Name" style="width: 80%; border: 2px solid var(--primary); border-radius: 10px; padding: 10px; margin-bottom: 20px;">
         <br>
+        <div class="attempt-selector">
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">Select Attempt (1-15):</p>
+            <div id="attempt-buttons"></div>
+        </div>
         <button id="next-btn" onclick="startQuiz()">Start Quiz</button>
     </div>
 
@@ -26,30 +73,190 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjaoBxGbsuMNHNvenbb_3wAw1XKuGLHSFoSHbvT3NL0zAkFbWSppPQVyYLxjTxCJFp/exec";
     
     const questionBank = [
-        { direct: "“Did you finish this report yesterday?”", pre: "She asked him", post: ".", ans: "if he had finished that report the day before" },
-        { direct: "“Will you visit me next week?”", pre: "He asked her", post: ".", ans: "if she would visit him the following week" },
-        { direct: "“Why did you buy this car?”", pre: "I asked her", post: ".", ans: "why she had bought that car" },
-        { direct: "“Where are you going tomorrow?”", pre: "The boss asked me", post: ".", ans: "where I was going the following day" },
-        { direct: "“Do you like this new office?”", pre: "They asked us", post: ".", ans: "if we liked that new office" },
-        { direct: "“What did you do last week?”", pre: "She asked them", post: ".", ans: "what they had done the week before" },
-        { direct: "“Can you fix this computer?”", pre: "He asked the technician", post: ".", ans: "if he could fix that computer" },
-        { direct: "“Have you seen this movie before?”", pre: "She asked me", post: ".", ans: "if I had seen that movie before" },
-        { direct: "“Who called you yesterday?”", pre: "My mom asked me", post: ".", ans: "who had called me the day before" },
-        { direct: "“Are you coming to this party tonight?”", pre: "He asked his friend", post: ".", ans: "if he was coming to that party that night" },
-        { direct: "“When will they complete this project?”", pre: "The client asked him", post: ".", ans: "when they would complete that project" },
-        { direct: "“How did you find this information?”", pre: "The teacher asked her", post: ".", ans: "how she had found that information" },
-        { direct: "“Does she know about this meeting tomorrow?”", pre: "I asked him", post: ".", ans: "if she knew about that meeting the following day" },
-        { direct: "“Why is this door locked?”", pre: "She asked the guard", post: ".", ans: "why that door was locked" },
-        { direct: "“Did they arrive last week?”", pre: "We asked her", post: ".", ans: "if they had arrived the week before" },
-        { direct: "“Where did you leave this bag?”", pre: "He asked me", post: ".", ans: "where I had left that bag" },
-        { direct: "“Will you help me with this tomorrow?”", pre: "She asked him", post: ".", ans: "if he would help her with that the following day" },
-        { direct: "“What time does this shop open?”", pre: "I asked them", post: ".", ans: "what time that shop opened" },
-        { direct: "“Did you see him yesterday?”", pre: "She asked her brother", post: ".", ans: "if he had seen him the day before" },
-        { direct: "“Are you using this laptop now?”", pre: "He asked me", post: ".", ans: "if I was using that laptop then" }
+        { direct: "Did you finish this report yesterday?", pre: "She asked him", post: ".", ans: ["if he had finished that report the day before", "if he had finished that report the previous day", "whether he had finished that report the day before", "whether he had finished that report the previous day"] },
+        { direct: "Will you visit me next week?", pre: "He asked her", post: ".", ans: ["if she would visit him the following week", "if she would visit him the next week", "whether she would visit him the following week", "whether she would visit him the next week"] },
+        { direct: "Why did you buy this car?", pre: "I asked her", post: ".", ans: ["why she had bought that car"] },
+        { direct: "Where are you going tomorrow?", pre: "The boss asked me", post: ".", ans: ["where I was going the following day", "where I was going the next day"] },
+        { direct: "Do you like this new office?", pre: "They asked us", post: ".", ans: ["if we liked that new office", "whether we liked that new office"] },
+        { direct: "What did you do last week?", pre: "She asked them", post: ".", ans: ["what they had done the week before", "what they had done the previous week"] },
+        { direct: "Can you fix this computer?", pre: "He asked the technician", post: ".", ans: ["if he could fix that computer", "whether he could fix that computer"] },
+        { direct: "Have you seen this movie before?", pre: "She asked me", post: ".", ans: ["if I had seen that movie before", "whether I had seen that movie before"] },
+        { direct: "Who called you yesterday?", pre: "My mom asked me", post: ".", ans: ["who had called me the day before", "who had called me the previous day"] },
+        { direct: "Are you coming to this party tonight?", pre: "He asked his friend", post: ".", ans: ["if he was coming to that party that night", "whether he was coming to that party that night"] },
+        
+        { direct: "When will they complete this project?", pre: "The client asked him", post: ".", ans: ["when they would complete that project"] },
+        { direct: "How did you find this information?", pre: "The teacher asked her", post: ".", ans: ["how she had found that information"] },
+        { direct: "Does she know about this meeting tomorrow?", pre: "I asked him", post: ".", ans: ["if she knew about that meeting the following day", "if she knew about that meeting the next day", "whether she knew about that meeting the following day", "whether she knew about that meeting the next day"] },
+        { direct: "Why is this door locked?", pre: "She asked the guard", post: ".", ans: ["why that door was locked"] },
+        { direct: "Did they arrive last week?", pre: "We asked her", post: ".", ans: ["if they had arrived the week before", "if they had arrived the previous week", "whether they had arrived the week before", "whether they had arrived the previous week"] },
+        { direct: "Where did you leave this bag?", pre: "He asked me", post: ".", ans: ["where I had left that bag"] },
+        { direct: "Will you help me with this tomorrow?", pre: "She asked him", post: ".", ans: ["if he would help her with that the following day", "if he would help her with that the next day", "whether he would help her with that the following day", "whether he would help her with that the next day"] },
+        { direct: "What time does this shop open?", pre: "I asked them", post: ".", ans: ["what time that shop opened"] },
+        { direct: "Did you see him yesterday?", pre: "She asked her brother", post: ".", ans: ["if he had seen him the day before", "if he had seen him the previous day", "whether he had seen him the day before", "whether he had seen him the previous day"] },
+        { direct: "Are you using this laptop now?", pre: "He asked me", post: ".", ans: ["if I was using that laptop then", "whether I was using that laptop then", "if I was using that laptop at that moment", "whether I was using that laptop at that moment"] },
+        
+        { direct: "Can she speak French?", pre: "They asked me", post: ".", ans: ["if she could speak french", "whether she could speak french"] },
+        { direct: "Where do you live now?", pre: "He asked her", post: ".", ans: ["where she lived then", "where she lived at that time"] },
+        { direct: "Did you enjoy this concert last night?", pre: "She asked us", post: ".", ans: ["if we had enjoyed that concert the night before", "if we had enjoyed that concert the previous night", "whether we had enjoyed that concert the night before", "whether we had enjoyed that concert the previous night"] },
+        { direct: "When did you move to this city?", pre: "I asked him", post: ".", ans: ["when he had moved to that city"] },
+        { direct: "Will they join us tomorrow?", pre: "She asked me", post: ".", ans: ["if they would join us the following day", "if they would join us the next day", "whether they would join us the following day", "whether they would join us the next day"] },
+        { direct: "How often do you visit this place?", pre: "He asked them", post: ".", ans: ["how often they visited that place"] },
+        { direct: "Are you working on this project today?", pre: "The manager asked me", post: ".", ans: ["if I was working on that project that day", "whether I was working on that project that day"] },
+        { direct: "What did you think of this proposal?", pre: "She asked him", post: ".", ans: ["what he had thought of that proposal"] },
+        { direct: "Have you met her before?", pre: "I asked them", post: ".", ans: ["if they had met her before", "whether they had met her before"] },
+        { direct: "Do you want to go to this restaurant tonight?", pre: "He asked his wife", post: ".", ans: ["if she wanted to go to that restaurant that night", "whether she wanted to go to that restaurant that night"] },
+        
+        { direct: "Why didn't you call me yesterday?", pre: "She asked him", post: ".", ans: ["why he had not called her the day before", "why he had not called her the previous day", "why he hadn't called her the day before", "why he hadn't called her the previous day"] },
+        { direct: "Can you come to this meeting tomorrow?", pre: "My boss asked me", post: ".", ans: ["if I could come to that meeting the following day", "if I could come to that meeting the next day", "whether I could come to that meeting the following day", "whether I could come to that meeting the next day"] },
+        { direct: "Where are you staying now?", pre: "I asked her", post: ".", ans: ["where she was staying then", "where she was staying at that time"] },
+        { direct: "Did you finish this task last week?", pre: "He asked them", post: ".", ans: ["if they had finished that task the week before", "if they had finished that task the previous week", "whether they had finished that task the week before", "whether they had finished that task the previous week"] },
+        { direct: "What are you doing here today?", pre: "She asked me", post: ".", ans: ["what I was doing there that day"] },
+        { direct: "Will you be available next month?", pre: "They asked him", post: ".", ans: ["if he would be available the following month", "if he would be available the next month", "whether he would be available the following month", "whether he would be available the next month"] },
+        { direct: "How did you learn about this opportunity?", pre: "The interviewer asked me", post: ".", ans: ["how I had learned about that opportunity", "how I had learnt about that opportunity"] },
+        { direct: "Are these documents ready now?", pre: "He asked the assistant", post: ".", ans: ["if those documents were ready then", "whether those documents were ready then", "if those documents were ready at that moment", "whether those documents were ready at that moment"] },
+        { direct: "Do you remember this incident?", pre: "The police officer asked her", post: ".", ans: ["if she remembered that incident", "whether she remembered that incident"] },
+        { direct: "When can you start working here?", pre: "She asked me", post: ".", ans: ["when I could start working there"] },
+        
+        { direct: "Have you been to this country before?", pre: "The officer asked him", post: ".", ans: ["if he had been to that country before", "whether he had been to that country before"] },
+        { direct: "Why are you leaving this job?", pre: "I asked her", post: ".", ans: ["why she was leaving that job"] },
+        { direct: "Did you receive my email yesterday?", pre: "He asked me", post: ".", ans: ["if I had received his email the day before", "if I had received his email the previous day", "whether I had received his email the day before", "whether I had received his email the previous day"] },
+        { direct: "Where will you go next summer?", pre: "She asked them", post: ".", ans: ["where they would go the following summer", "where they would go the next summer"] },
+        { direct: "Can I use this computer now?", pre: "He asked her", post: ".", ans: ["if he could use that computer then", "whether he could use that computer then", "if he could use that computer at that moment", "whether he could use that computer at that moment"] },
+        { direct: "What time did you arrive yesterday?", pre: "They asked me", post: ".", ans: ["what time I had arrived the day before", "what time I had arrived the previous day"] },
+        { direct: "Are you planning to buy this house?", pre: "The agent asked us", post: ".", ans: ["if we were planning to buy that house", "whether we were planning to buy that house"] },
+        { direct: "How long have you lived here?", pre: "I asked him", post: ".", ans: ["how long he had lived there"] },
+        { direct: "Will she attend this conference next week?", pre: "He asked me", post: ".", ans: ["if she would attend that conference the following week", "if she would attend that conference the next week", "whether she would attend that conference the following week", "whether she would attend that conference the next week"] },
+        { direct: "Do you need help with this assignment today?", pre: "She asked her classmate", post: ".", ans: ["if he needed help with that assignment that day", "whether he needed help with that assignment that day", "if she needed help with that assignment that day", "whether she needed help with that assignment that day"] },
+        
+        { direct: "What did you learn from this experience?", pre: "The coach asked him", post: ".", ans: ["what he had learned from that experience", "what he had learnt from that experience"] },
+        { direct: "Can you speak louder?", pre: "She asked me", post: ".", ans: ["if I could speak louder", "whether I could speak louder"] },
+        { direct: "Did you enjoy this trip last month?", pre: "I asked them", post: ".", ans: ["if they had enjoyed that trip the month before", "if they had enjoyed that trip the previous month", "whether they had enjoyed that trip the month before", "whether they had enjoyed that trip the previous month"] },
+        { direct: "Where did you park your car?", pre: "He asked her", post: ".", ans: ["where she had parked her car"] },
+        { direct: "Will you join this team tomorrow?", pre: "The captain asked him", post: ".", ans: ["if he would join that team the following day", "if he would join that team the next day", "whether he would join that team the following day", "whether he would join that team the next day"] },
+        { direct: "Are you feeling better today?", pre: "She asked me", post: ".", ans: ["if I was feeling better that day", "whether I was feeling better that day"] },
+        { direct: "How much does this cost?", pre: "I asked the salesperson", post: ".", ans: ["how much that cost"] },
+        { direct: "Have you completed this form?", pre: "He asked her", post: ".", ans: ["if she had completed that form", "whether she had completed that form"] },
+        { direct: "When did you last see him?", pre: "The detective asked me", post: ".", ans: ["when I had last seen him"] },
+        { direct: "Do you want to reschedule this appointment?", pre: "She asked him", post: ".", ans: ["if he wanted to reschedule that appointment", "whether he wanted to reschedule that appointment"] },
+        
+        { direct: "Why are you selling this house now?", pre: "I asked them", post: ".", ans: ["why they were selling that house then", "why they were selling that house at that time"] },
+        { direct: "Can she join us for dinner tonight?", pre: "He asked me", post: ".", ans: ["if she could join us for dinner that night", "if she could join them for dinner that night", "whether she could join us for dinner that night", "whether she could join them for dinner that night"] },
+        { direct: "Where did you study last year?", pre: "She asked him", post: ".", ans: ["where he had studied the year before", "where he had studied the previous year"] },
+        { direct: "Will you bring this document tomorrow?", pre: "My lawyer asked me", post: ".", ans: ["if I would bring that document the following day", "if I would bring that document the next day", "whether I would bring that document the following day", "whether I would bring that document the next day"] },
+        { direct: "Are you working from home today?", pre: "The supervisor asked her", post: ".", ans: ["if she was working from home that day", "whether she was working from home that day"] },
+        { direct: "What happened at this meeting yesterday?", pre: "I asked him", post: ".", ans: ["what had happened at that meeting the day before", "what had happened at that meeting the previous day"] },
+        { direct: "Do you have this information now?", pre: "He asked them", post: ".", ans: ["if they had that information then", "whether they had that information then", "if they had that information at that moment", "whether they had that information at that moment"] },
+        { direct: "How did you solve this problem?", pre: "She asked me", post: ".", ans: ["how I had solved that problem"] },
+        { direct: "Have you spoken to her recently?", pre: "He asked his friend", post: ".", ans: ["if he had spoken to her recently", "whether he had spoken to her recently"] },
+        { direct: "When will you return from this trip?", pre: "I asked her", post: ".", ans: ["when she would return from that trip"] },
+        
+        { direct: "Can you explain this concept to me?", pre: "The student asked the teacher", post: ".", ans: ["if he could explain that concept to him", "if she could explain that concept to him", "whether he could explain that concept to him", "whether she could explain that concept to him", "if he could explain that concept to her", "if she could explain that concept to her", "whether he could explain that concept to her", "whether she could explain that concept to her"] },
+        { direct: "Did you attend this workshop last week?", pre: "She asked me", post: ".", ans: ["if I had attended that workshop the week before", "if I had attended that workshop the previous week", "whether I had attended that workshop the week before", "whether I had attended that workshop the previous week"] },
+        { direct: "Where are you working now?", pre: "He asked her", post: ".", ans: ["where she was working then", "where she was working at that time"] },
+        { direct: "Will they deliver this package tomorrow?", pre: "I asked the company", post: ".", ans: ["if they would deliver that package the following day", "if they would deliver that package the next day", "whether they would deliver that package the following day", "whether they would deliver that package the next day"] },
+        { direct: "What are you planning to do next year?", pre: "She asked him", post: ".", ans: ["what he was planning to do the following year", "what he was planning to do the next year"] },
+        { direct: "Are these results accurate?", pre: "The scientist asked his colleague", post: ".", ans: ["if those results were accurate", "whether those results were accurate"] },
+        { direct: "How long did you wait here yesterday?", pre: "I asked them", post: ".", ans: ["how long they had waited there the day before", "how long they had waited there the previous day"] },
+        { direct: "Do you understand this instruction?", pre: "He asked me", post: ".", ans: ["if I understood that instruction", "whether I understood that instruction"] },
+        { direct: "When did you finish this book?", pre: "She asked her friend", post: ".", ans: ["when he had finished that book", "when she had finished that book"] },
+        { direct: "Will you support this proposal?", pre: "The committee asked him", post: ".", ans: ["if he would support that proposal", "whether he would support that proposal"] },
+        
+        { direct: "Have you checked this email today?", pre: "My boss asked me", post: ".", ans: ["if I had checked that email that day", "whether I had checked that email that day"] },
+        { direct: "Why did you choose this option?", pre: "I asked her", post: ".", ans: ["why she had chosen that option"] },
+        { direct: "Can we discuss this matter now?", pre: "He asked his partner", post: ".", ans: ["if they could discuss that matter then", "whether they could discuss that matter then", "if they could discuss that matter at that moment", "whether they could discuss that matter at that moment"] },
+        { direct: "Where will you be next month?", pre: "She asked me", post: ".", ans: ["where I would be the following month", "where I would be the next month"] },
+        { direct: "Did you notice this change yesterday?", pre: "The manager asked them", post: ".", ans: ["if they had noticed that change the day before", "if they had noticed that change the previous day", "whether they had noticed that change the day before", "whether they had noticed that change the previous day"] },
+        { direct: "Are you interested in this position?", pre: "The HR manager asked him", post: ".", ans: ["if he was interested in that position", "whether he was interested in that position"] },
+        { direct: "What time does this train leave?", pre: "I asked the conductor", post: ".", ans: ["what time that train left"] },
+        { direct: "How many people attended this event last night?", pre: "She asked the organizer", post: ".", ans: ["how many people had attended that event the night before", "how many people had attended that event the previous night"] },
+        { direct: "Will she bring her laptop tomorrow?", pre: "He asked me", post: ".", ans: ["if she would bring her laptop the following day", "if she would bring her laptop the next day", "whether she would bring her laptop the following day", "whether she would bring her laptop the next day"] },
+        { direct: "Do you have any questions about this topic?", pre: "The presenter asked us", post: ".", ans: ["if we had any questions about that topic", "whether we had any questions about that topic"] },
+        
+        { direct: "Can you recommend this restaurant?", pre: "I asked him", post: ".", ans: ["if he could recommend that restaurant", "whether he could recommend that restaurant"] },
+        { direct: "Where did you meet her yesterday?", pre: "She asked me", post: ".", ans: ["where I had met her the day before", "where I had met her the previous day"] },
+        { direct: "Will you upgrade this system next week?", pre: "The IT manager asked the technician", post: ".", ans: ["if he would upgrade that system the following week", "if he would upgrade that system the next week", "whether he would upgrade that system the following week", "whether he would upgrade that system the next week"] },
+        { direct: "Are you satisfied with this service?", pre: "The company asked us", post: ".", ans: ["if we were satisfied with that service", "whether we were satisfied with that service"] },
+        { direct: "What did you discuss at this meeting last week?", pre: "I asked them", post: ".", ans: ["what they had discussed at that meeting the week before", "what they had discussed at that meeting the previous week"] },
+        { direct: "How often do you use this application?", pre: "The developer asked me", post: ".", ans: ["how often I used that application"] },
+        { direct: "Did you backup this file yesterday?", pre: "He asked her", post: ".", ans: ["if she had backed up that file the day before", "if she had backed up that file the previous day", "whether she had backed up that file the day before", "whether she had backed up that file the previous day"] },
+        { direct: "When can you submit this report?", pre: "She asked him", post: ".", ans: ["when he could submit that report"] },
+        { direct: "Have you contacted them recently?", pre: "My colleague asked me", post: ".", ans: ["if I had contacted them recently", "whether I had contacted them recently"] },
+        { direct: "Do you need this equipment today?", pre: "The supervisor asked her", post: ".", ans: ["if she needed that equipment that day", "whether she needed that equipment that day"] },
+        
+        { direct: "Why are you closing this account now?", pre: "The banker asked me", post: ".", ans: ["why I was closing that account then", "why I was closing that account at that time"] },
+        { direct: "Can you translate this document for me?", pre: "He asked her", post: ".", ans: ["if she could translate that document for him", "whether she could translate that document for him"] },
+        { direct: "Where did you hear about this news?", pre: "I asked him", post: ".", ans: ["where he had heard about that news"] },
+        { direct: "Will you attend this training tomorrow?", pre: "The coordinator asked them", post: ".", ans: ["if they would attend that training the following day", "if they would attend that training the next day", "whether they would attend that training the following day", "whether they would attend that training the next day"] },
+        { direct: "Are you happy with this decision?", pre: "She asked me", post: ".", ans: ["if I was happy with that decision", "whether I was happy with that decision"] },
+        { direct: "What happened during this presentation yesterday?", pre: "He asked her", post: ".", ans: ["what had happened during that presentation the day before", "what had happened during that presentation the previous day"] },
+        { direct: "Do you remember this password?", pre: "The system asked me", post: ".", ans: ["if I remembered that password", "whether I remembered that password"] },
+        { direct: "How did you access this file?", pre: "The admin asked him", post: ".", ans: ["how he had accessed that file"] },
+        { direct: "Have you reviewed this contract yet?", pre: "She asked the lawyer", post: ".", ans: ["if he had reviewed that contract yet", "if she had reviewed that contract yet", "whether he had reviewed that contract yet", "whether she had reviewed that contract yet"] },
+        { direct: "When will you launch this product?", pre: "I asked them", post: ".", ans: ["when they would launch that product"] },
+        
+        { direct: "Can you drive me to this location today?", pre: "He asked his brother", post: ".", ans: ["if he could drive him to that location that day", "whether he could drive him to that location that day"] },
+        { direct: "Did you understand this lesson yesterday?", pre: "The teacher asked the students", post: ".", ans: ["if they had understood that lesson the day before", "if they had understood that lesson the previous day", "whether they had understood that lesson the day before", "whether they had understood that lesson the previous day"] },
+        { direct: "Where are you going for vacation next month?", pre: "I asked her", post: ".", ans: ["where she was going for vacation the following month", "where she was going for vacation the next month"] },
+        { direct: "Will they approve this budget tomorrow?", pre: "She asked the accountant", post: ".", ans: ["if they would approve that budget the following day", "if they would approve that budget the next day", "whether they would approve that budget the following day", "whether they would approve that budget the next day"] },
+        { direct: "What are you working on now?", pre: "He asked me", post: ".", ans: ["what I was working on then", "what I was working on at that time", "what I was working on at that moment"] },
+        { direct: "Are these measurements correct?", pre: "The engineer asked his assistant", post: ".", ans: ["if those measurements were correct", "whether those measurements were correct"] },
+        { direct: "How long have you been waiting here?", pre: "I asked them", post: ".", ans: ["how long they had been waiting there"] },
+        { direct: "Do you agree with this policy?", pre: "She asked him", post: ".", ans: ["if he agreed with that policy", "whether he agreed with that policy"] },
+        { direct: "When did you last update this software?", pre: "The IT specialist asked me", post: ".", ans: ["when I had last updated that software"] },
+        { direct: "Will you participate in this event next week?", pre: "He asked her", post: ".", ans: ["if she would participate in that event the following week", "if she would participate in that event the next week", "whether she would participate in that event the following week", "whether she would participate in that event the next week"] },
+        
+        { direct: "Have you completed this task today?", pre: "My supervisor asked me", post: ".", ans: ["if I had completed that task that day", "whether I had completed that task that day"] },
+        { direct: "Why did you reject this offer?", pre: "I asked him", post: ".", ans: ["why he had rejected that offer"] },
+        { direct: "Can we meet at this cafe tomorrow?", pre: "She asked her friend", post: ".", ans: ["if they could meet at that cafe the following day", "if they could meet at that cafe the next day", "whether they could meet at that cafe the following day", "whether they could meet at that cafe the next day"] },
+        { direct: "Where will you study next year?", pre: "He asked me", post: ".", ans: ["where I would study the following year", "where I would study the next year"] },
+        { direct: "Did you receive this message last night?", pre: "She asked him", post: ".", ans: ["if he had received that message the night before", "if he had received that message the previous night", "whether he had received that message the night before", "whether he had received that message the previous night"] },
+        { direct: "Are you available for this interview tomorrow?", pre: "The recruiter asked me", post: ".", ans: ["if I was available for that interview the following day", "if I was available for that interview the next day", "whether I was available for that interview the following day", "whether I was available for that interview the next day"] },
+        { direct: "What time did you leave this building yesterday?", pre: "The guard asked her", post: ".", ans: ["what time she had left that building the day before", "what time she had left that building the previous day"] },
+        { direct: "How many students are enrolled in this course?", pre: "I asked the administrator", post: ".", ans: ["how many students were enrolled in that course"] },
+        { direct: "Will you renew this subscription next month?", pre: "The company asked him", post: ".", ans: ["if he would renew that subscription the following month", "if he would renew that subscription the next month", "whether he would renew that subscription the following month", "whether he would renew that subscription the next month"] },
+        { direct: "Do you know where this office is?", pre: "He asked me", post: ".", ans: ["if I knew where that office was", "whether I knew where that office was"] },
+        
+        { direct: "Can you lend me this book today?", pre: "She asked her classmate", post: ".", ans: ["if he could lend her that book that day", "if she could lend her that book that day", "whether he could lend her that book that day", "whether she could lend her that book that day"] },
+        { direct: "Where did you download this application?", pre: "I asked him", post: ".", ans: ["where he had downloaded that application"] },
+        { direct: "Will you sign this contract tomorrow?", pre: "The agent asked her", post: ".", ans: ["if she would sign that contract the following day", "if she would sign that contract the next day", "whether she would sign that contract the following day", "whether she would sign that contract the next day"] },
+        { direct: "Are you enjoying this class?", pre: "The professor asked us", post: ".", ans: ["if we were enjoying that class", "whether we were enjoying that class"] },
+        { direct: "What did you order at this restaurant last week?", pre: "He asked me", post: ".", ans: ["what I had ordered at that restaurant the week before", "what I had ordered at that restaurant the previous week"] },
+        { direct: "How did you find this apartment?", pre: "She asked them", post: ".", ans: ["how they had found that apartment"] },
+        { direct: "Did you save this file yesterday?", pre: "My colleague asked me", post: ".", ans: ["if I had saved that file the day before", "if I had saved that file the previous day", "whether I had saved that file the day before", "whether I had saved that file the previous day"] },
+        { direct: "When will you move to this city?", pre: "I asked her", post: ".", ans: ["when she would move to that city"] },
+        { direct: "Have you been to this museum before?", pre: "He asked his friends", post: ".", ans: ["if they had been to that museum before", "whether they had been to that museum before"] },
+        { direct: "Do you prefer this option?", pre: "She asked him", post: ".", ans: ["if he preferred that option", "whether he preferred that option"] },
+        
+        { direct: "Why are you canceling this order now?", pre: "The customer service asked me", post: ".", ans: ["why I was canceling that order then", "why I was canceling that order at that time", "why I was cancelling that order then", "why I was cancelling that order at that time"] },
+        { direct: "Can you show me this report?", pre: "I asked her", post: ".", ans: ["if she could show me that report", "whether she could show me that report"] },
+        { direct: "Where did you buy this phone?", pre: "He asked me", post: ".", ans: ["where I had bought that phone"] },
+        { direct: "Will you take this exam next week?", pre: "The coordinator asked him", post: ".", ans: ["if he would take that exam the following week", "if he would take that exam the next week", "whether he would take that exam the following week", "whether he would take that exam the next week"] },
+        { direct: "Are you coming to this event tonight?", pre: "She asked me", post: ".", ans: ["if I was coming to that event that night", "whether I was coming to that event that night"] },
+        { direct: "What happened at this party last night?", pre: "I asked them", post: ".", ans: ["what had happened at that party the night before", "what had happened at that party the previous night"] },
+        { direct: "Do you have this version of the software?", pre: "He asked the technician", post: ".", ans: ["if he had that version of the software", "if she had that version of the software", "whether he had that version of the software", "whether she had that version of the software"] },
+        { direct: "How did you prepare for this test?", pre: "She asked her student", post: ".", ans: ["how he had prepared for that test", "how she had prepared for that test"] },
+        { direct: "Have you heard about this opportunity yet?", pre: "My friend asked me", post: ".", ans: ["if I had heard about that opportunity yet", "whether I had heard about that opportunity yet"] },
+        { direct: "When can you finish this assignment?", pre: "The professor asked him", post: ".", ans: ["when he could finish that assignment"] }
     ];
 
     let currentQ = 0, score = 0, quizData = [], timeLeft = 300, timerId;
-    let studentName = "", mistakes = [];
+    let studentName = "", mistakes = [], selectedAttempt = 1;
+
+    window.onload = function() {
+        const container = document.getElementById('attempt-buttons');
+        for(let i = 1; i <= 15; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'attempt-btn';
+            btn.innerText = i;
+            btn.onclick = function() {
+                selectedAttempt = i;
+                document.querySelectorAll('.attempt-btn').forEach(b => b.style.background = 'rgba(162, 155, 254, 0.3)');
+                this.style.background = 'var(--primary)';
+            };
+            if(i === 1) btn.style.background = 'var(--primary)';
+            container.appendChild(btn);
+        }
+    };
 
     function startQuiz() {
         studentName = document.getElementById('student-name').value.trim();
@@ -60,7 +267,10 @@
     }
 
     function initQuiz() {
-        quizData = questionBank.sort(() => 0.5 - Math.random()).slice(0, 10);
+        const startIdx = (selectedAttempt - 1) * 10;
+        const endIdx = startIdx + 10;
+        quizData = questionBank.slice(startIdx, endIdx);
+        
         const bar = document.getElementById('progress-bar');
         bar.innerHTML = '';
         for(let i=0; i<10; i++) {
@@ -77,18 +287,27 @@
         timerId = setInterval(() => {
             timeLeft--;
             let m = Math.floor(timeLeft/60), s = timeLeft%60;
-            document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
+            document.getElementById('timer').innerText = m + ':' + (s < 10 ? '0'+s : s);
             if(timeLeft <= 0) finish();
         }, 1000);
     }
 
     function loadQuestion() {
         const q = quizData[currentQ];
-        document.getElementById('active-text').innerText = "Direct: " + q.direct;
-        document.getElementById('passive-display').innerHTML = `${q.pre} <input type="text" id="ans-input" autocomplete="off"> ${q.post}`;
+        document.getElementById('active-text').innerText = 'Direct: "' + q.direct + '"';
+        document.getElementById('passive-display').innerHTML = q.pre + ' <input type="text" id="ans-input" autocomplete="off"> ' + q.post;
         document.getElementById('feedback').innerText = '';
         document.getElementById('ans-input').focus();
         document.getElementById('next-btn').innerText = "Check Answer";
+    }
+
+    function normalizeAnswer(answer) {
+        return answer.toLowerCase().trim().replace(/[.?!,;]$/g, "");
+    }
+
+    function checkAnswer(userAnswer, correctAnswers) {
+        const normalized = normalizeAnswer(userAnswer);
+        return correctAnswers.some(ans => normalizeAnswer(ans) === normalized);
     }
 
     function handleButtonClick() {
@@ -101,18 +320,23 @@
             return;
         }
 
-        const user = input.value.trim().toLowerCase().replace(/[.?]$/,"");
-        const correct = quizData[currentQ].ans.toLowerCase();
+        const user = input.value.trim();
+        const correctAnswers = quizData[currentQ].ans;
         const seg = document.getElementById('seg-'+currentQ);
 
-        if(user === correct) {
+        if(checkAnswer(user, correctAnswers)) {
             document.getElementById('feedback').innerHTML = "<span style='color:var(--success)'>Correct!</span>";
             seg.style.background = 'var(--success)';
             score++;
         } else {
-            document.getElementById('feedback').innerHTML = `<span style='color:var(--error)'>Incorrect: ...${quizData[currentQ].ans}</span>`;
+            document.getElementById('feedback').innerHTML = "<span style='color:var(--error)'>Incorrect. Correct answer: ..." + correctAnswers[0] + "</span>";
             seg.style.background = 'var(--error)';
-            mistakes.push({ direct: quizData[currentQ].direct, user: user || "(blank)", correct: quizData[currentQ].ans });
+            mistakes.push({ 
+                direct: quizData[currentQ].direct, 
+                user: user || "(blank)", 
+                correct: correctAnswers[0],
+                alternatives: correctAnswers.length > 1 ? correctAnswers.slice(1).join(" OR ") : "none"
+            });
         }
         input.disabled = true;
         document.getElementById('next-btn').innerText = "Next Question";
@@ -126,29 +350,41 @@
         if(mistakes.length > 0) {
             analysisHtml = '<h3 style="margin-top:20px;">Mistakes Analysis:</h3>';
             mistakes.forEach(m => {
-                analysisHtml += `<div class="review-item">
-                    <strong>Direct:</strong> ${m.direct}<br>
-                    <span style="color:var(--error); text-decoration:line-through;">Your answer: ${m.user}</span><br>
-                    <span style="color:var(--success);">Correct answer: ${m.correct}</span>
-                </div>`;
+                analysisHtml += '<div class="review-item">';
+                analysisHtml += '<strong>Direct:</strong> "' + m.direct + '"<br>';
+                analysisHtml += '<span style="color:var(--error); text-decoration:line-through;">Your answer: ' + m.user + '</span><br>';
+                analysisHtml += '<span style="color:var(--success);">Correct answer: ' + m.correct + '</span><br>';
+                if(m.alternatives !== "none") {
+                    analysisHtml += '<span style="color:var(--warning); font-size:0.85rem;">Other accepted answers: ' + m.alternatives + '</span>';
+                }
+                analysisHtml += '</div>';
             });
         }
 
-        document.getElementById('quiz-content').innerHTML = `
-            <h2>Finished!</h2>
-            <p style="font-size:3rem; margin:10px 0;">${percent}%</p>
-            <p>${studentName}, you scored ${score}/10</p>
-            <div style="max-height:250px; overflow-y:auto; margin-bottom:20px;">${analysisHtml}</div>
-            <button onclick="location.reload()" id="next-btn">Try Again</button>
-        `;
+        document.getElementById('quiz-content').innerHTML = 
+            '<h2>Finished!</h2>' +
+            '<p style="font-size:3rem; margin:10px 0;">' + percent + '%</p>' +
+            '<p>' + studentName + ', you scored ' + score + '/10 (Attempt ' + selectedAttempt + ')</p>' +
+            '<div style="max-height:250px; overflow-y:auto; margin-bottom:20px;">' + analysisHtml + '</div>' +
+            '<button onclick="location.reload()" id="next-btn">Try Again</button>';
 
         try {
-            const mistakesText = mistakes.map(m => `Direct: ${m.direct} | User: ${m.user} | Correct: ${m.correct}`).join("\n");
+            const mistakesText = mistakes.map(m => 
+                'Direct: ' + m.direct + ' | User: ' + m.user + ' | Correct: ' + m.correct + ' | Alternatives: ' + m.alternatives
+            ).join("\n");
             fetch(SCRIPT_URL, { 
                 method: "POST", 
                 mode: "no-cors", 
-                body: JSON.stringify({ name: studentName, score: score, percentage: percent + "%", mistakes: mistakesText }) 
+                body: JSON.stringify({ 
+                    name: studentName, 
+                    score: score, 
+                    percentage: percent + "%", 
+                    attempt: selectedAttempt,
+                    mistakes: mistakesText 
+                }) 
             });
         } catch (e) { console.log("Data error"); }
     }
-</script></body></html>
+</script>
+</body>
+</html>
