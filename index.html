@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,13 +32,6 @@
         }
         .review-item { text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--error); font-size: 0.9rem; }
         .hidden { display: none; }
-        .attempt-selector { margin: 20px 0; }
-        .attempt-btn { 
-            padding: 10px 20px; margin: 5px; background: rgba(162, 155, 254, 0.3); 
-            border: 2px solid var(--primary); border-radius: 8px; cursor: pointer; 
-            color: white; font-weight: 600;
-        }
-        .attempt-btn:hover { background: rgba(162, 155, 254, 0.5); }
     </style>
 </head>
 <body>
@@ -50,15 +42,11 @@
         <p>Convert the direct questions into reported speech.</p>
         <input type="text" id="student-name" placeholder="Enter Full Name" style="width: 80%; border: 2px solid var(--primary); border-radius: 10px; padding: 10px; margin-bottom: 20px;">
         <br>
-        <div class="attempt-selector">
-            <p style="font-size: 0.9rem; margin-bottom: 10px;">Select Attempt (1-15):</p>
-            <div id="attempt-buttons"></div>
-        </div>
         <button id="next-btn" onclick="startQuiz()">Start Quiz</button>
     </div>
 
     <div id="main-quiz" class="hidden">
-        <div id="timer">05:00</div>
+        <div id="timer">10:00</div>
         <div class="progress-container" id="progress-bar"></div>
         <div id="quiz-content">
             <p class="direct-quote" id="active-text"></p>
@@ -239,28 +227,29 @@
         { direct: "When can you finish this assignment?", pre: "The professor asked him", post: ".", ans: ["when he could finish that assignment"] }
     ];
 
-    let currentQ = 0, score = 0, quizData = [], timeLeft = 300, timerId;
+    let currentQ = 0, score = 0, quizData = [], timeLeft = 600, timerId;
     let studentName = "", mistakes = [], selectedAttempt = 1;
 
-    window.onload = function() {
-        const container = document.getElementById('attempt-buttons');
-        for(let i = 1; i <= 15; i++) {
-            const btn = document.createElement('button');
-            btn.className = 'attempt-btn';
-            btn.innerText = i;
-            btn.onclick = function() {
-                selectedAttempt = i;
-                document.querySelectorAll('.attempt-btn').forEach(b => b.style.background = 'rgba(162, 155, 254, 0.3)');
-                this.style.background = 'var(--primary)';
-            };
-            if(i === 1) btn.style.background = 'var(--primary)';
-            container.appendChild(btn);
+    function getAttemptNumber(name) {
+        const stored = localStorage.getItem('quiz_attempts');
+        const attempts = stored ? JSON.parse(stored) : {};
+        
+        if (!attempts[name]) {
+            attempts[name] = 1;
+        } else {
+            attempts[name]++;
         }
-    };
+        
+        localStorage.setItem('quiz_attempts', JSON.stringify(attempts));
+        return attempts[name];
+    }
 
     function startQuiz() {
         studentName = document.getElementById('student-name').value.trim();
         if (!studentName) { alert("Please enter your name."); return; }
+        
+        selectedAttempt = getAttemptNumber(studentName);
+        
         document.getElementById('start-screen').classList.add('hidden');
         document.getElementById('main-quiz').classList.remove('hidden');
         initQuiz();
