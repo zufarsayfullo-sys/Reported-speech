@@ -305,13 +305,59 @@
         document.getElementById('next-btn').innerText = "Check Answer";
     }
 
+    // Expand contractions so both "hadn't" and "had not" are treated as equal
+    function expandContractions(str) {
+        return str
+            .replace(/hadn't/gi, "had not")
+            .replace(/haven't/gi, "have not")
+            .replace(/hasn't/gi, "has not")
+            .replace(/wouldn't/gi, "would not")
+            .replace(/couldn't/gi, "could not")
+            .replace(/didn't/gi, "did not")
+            .replace(/doesn't/gi, "does not")
+            .replace(/don't/gi, "do not")
+            .replace(/wasn't/gi, "was not")
+            .replace(/weren't/gi, "were not")
+            .replace(/isn't/gi, "is not")
+            .replace(/aren't/gi, "are not")
+            .replace(/won't/gi, "will not")
+            .replace(/can't/gi, "cannot")
+            .replace(/that's/gi, "that is")
+            .replace(/he's/gi, "he is")
+            .replace(/she's/gi, "she is")
+            .replace(/it's/gi, "it is")
+            .replace(/they're/gi, "they are")
+            .replace(/we're/gi, "we are")
+            .replace(/you're/gi, "you are")
+            .replace(/i'm/gi, "i am")
+            .replace(/he'd/gi, "he had")
+            .replace(/she'd/gi, "she had")
+            .replace(/they'd/gi, "they had")
+            .replace(/we'd/gi, "we had")
+            .replace(/you'd/gi, "you had")
+            .replace(/he'll/gi, "he will")
+            .replace(/she'll/gi, "she will")
+            .replace(/they'll/gi, "they will")
+            .replace(/we'll/gi, "we will")
+            .replace(/you'll/gi, "you will")
+            .replace(/\bcannot\b/gi, "can not")
+            .replace(/learnt/gi, "learned")
+            .replace(/cancelling/gi, "canceling")
+            // Normalize multiple spaces
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
     function normalizeAnswer(answer) {
-        return answer.toLowerCase().trim().replace(/[.?!,;]$/g, "");
+        let normalized = answer.toLowerCase().trim().replace(/[.?!,;]$/g, "");
+        // Expand contractions so both short and long forms match
+        normalized = expandContractions(normalized);
+        return normalized;
     }
 
     function checkAnswer(userAnswer, correctAnswers) {
-        const normalized = normalizeAnswer(userAnswer);
-        return correctAnswers.some(ans => normalizeAnswer(ans) === normalized);
+        const normalizedUser = normalizeAnswer(userAnswer);
+        return correctAnswers.some(ans => normalizeAnswer(ans) === normalizedUser);
     }
 
     function handleButtonClick() {
